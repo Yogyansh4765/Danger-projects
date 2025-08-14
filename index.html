@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Shape Lab</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: #ffffff;
+            margin: 0;
+        }
+
+        #box {
+            width: 200px;
+            height: 200px;
+            background-color: #FFFFFF;
+            border-radius: 0%;
+            border: 2px solid #000;
+            transition: background-color 0.3s, border-radius 0.3s, width 0.3s, height 0.3s;
+        }
+
+        input {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            text-align: center;
+        }
+
+        /* YouTube Icon Styles */
+        #yt-link {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+        }
+        #yt-icon {
+            width: 60px; /* Increased size */
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        #yt-icon:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <input type="text" id="input" placeholder="e.g., #FF5722 or color name, 50% or px" oninput="changeBox()">
+
+    <!-- YouTube Icon Link -->
+    <a href="https://www.youtube.com/@DANGER-COMUNITY" target="_blank" id="yt-link">
+        <img src="youtube.png" alt="YouTube" id="yt-icon">
+    </a>
+
+    <script>
+        function changeBox() {
+            const box = document.getElementById('box');
+            const input = document.getElementById('input').value.trim();
+            
+            const parts = input.split(/\s+/).filter(Boolean);
+            let color = '';
+            let radius = '';
+
+            parts.forEach(part => {
+                if (/^#[0-9A-F]{3,6}$/i.test(part) || isValidColorName(part)) {
+                    color = part;
+                } else if (/^\d+(px|%)$/.test(part)) {
+                    radius = part;
+                }
+            });
+
+            if (color) {
+                box.style.backgroundColor = color;
+            } else {
+                box.style.backgroundColor = '#FFFFFF';
+            }
+
+            if (radius) {
+                box.style.borderRadius = radius;
+            } else {
+                box.style.borderRadius = '0%';
+            }
+        }
+
+        function isValidColorName(color) {
+            const s = new Option().style;
+            s.color = color;
+            return s.color !== '';
+        }
+    </script>
+</body>
+</html>
